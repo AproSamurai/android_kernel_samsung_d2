@@ -1550,6 +1550,16 @@ config MSM_IPC_ROUTER_SMD_XPRT
 	help
 	  SMD Transport Layer for IPC Router
 
+config MSM_IPC_ROUTER_HSIC_XPRT
+	depends on USB_QCOM_IPC_BRIDGE
+	depends on MSM_IPC_ROUTER
+	bool "MSM HSIC XPRT Layer"
+	help
+	  HSIC Transport Layer that enables off-chip communication of
+	  IPC Router. When the HSIC endpoint becomes available, this layer
+	  registers the transport with IPC Router and enable message
+	  exchange.
+
 config MSM_IPC_ROUTER_SECURITY
 	depends on MSM_IPC_ROUTER
 	bool "MSM IPC Router Security support"
@@ -2014,6 +2024,12 @@ config MSM_PIL_RIVA
 	  Support for booting and shutting down the RIVA processor (WCNSS).
 	  Riva is the wireless subsystem processor used in bluetooth, wireless
 	  LAN, and FM software applications.
+
+config MSM_INSECURE_PIL_RIVA
+	bool "Force Riva PIL to insecure mode"
+	depends on MSM_PIL_RIVA
+	help
+	  Force Riva PIL to use non-secure boot.
 
 config MSM_PIL_TZAPPS
 	tristate "TZApps Boot Support"

@@ -1789,7 +1789,9 @@ static void sec_bat_set_polling(
 	dev_dbg(battery->dev, "%s: End\n", __func__);
 }
 
+#if defined(CONFIG_CHARGER_MAX77693)
 extern void max77693_muic_monitor_status(void);
+#endif
 static void sec_bat_monitor_work(
 				struct work_struct *work)
 {
@@ -1854,7 +1856,7 @@ continue_monitor:
 	sec_bat_set_polling(battery);
 
 	/* check muic cable status */
-#if !defined(CONFIG_MACH_APEXQ) && !defined(CONFIG_MACH_EXPRESS)
+#if defined(CONFIG_CHARGER_MAX77693)
 	max77693_muic_monitor_status();
 #endif
 	wake_unlock(&battery->monitor_wake_lock);
@@ -2653,6 +2655,10 @@ static int sec_bat_get_property(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_ONLINE:
 		val->intval = battery->cable_type;
+		if (val->intval == POWER_SUPPLY_TYPE_BATTERY) {
+			/* Userspace expects 0 for no-supply */
+			val->intval = 0;
+			}
 		break;
 	case POWER_SUPPLY_PROP_TECHNOLOGY:
 		val->intval = battery->pdata->technology;

@@ -21,7 +21,7 @@
 #include <linux/i2c/isl9519.h>
 #include <linux/gpio.h>
 #include <linux/msm_ssbi.h>
-#include <linux/regulator/gpio-regulator.h>
+#include <linux/regulator/msm-gpio-regulator.h>
 #include <linux/mfd/pm8xxx/pm8921.h>
 #include <linux/mfd/pm8xxx/pm8xxx-adc.h>
 #include <linux/regulator/consumer.h>
@@ -3961,7 +3961,11 @@ static struct msm_i2c_platform_data msm8960_i2c_qup_gsbi3_pdata = {
 	.src_clk_rate = 24000000,
 };
 void msm_i2c_bwreset(int freq) {
+<<<<<<< HEAD
    msm8960_i2c_qup_gsbi3_pdata.clk_freq = freq;
+=======
+	msm8960_i2c_qup_gsbi3_pdata.clk_freq = freq;
+>>>>>>> eaa7c910f7aa87a7b68bb015cba091e68397f8a1
 }
 
 static struct msm_i2c_platform_data msm8960_i2c_qup_gsbi7_pdata = {
